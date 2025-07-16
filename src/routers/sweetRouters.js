@@ -6,7 +6,8 @@ const {
     updateSweetController,
     deleteSweetController,
     searchSweetController,
-    purchaseSweetController
+    purchaseSweetController,
+    updateStockController
 } = require("../controllers/sweetControllers");
 
 

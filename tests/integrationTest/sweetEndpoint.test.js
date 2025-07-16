@@ -121,4 +121,13 @@ test("POST /api/sweets/purchase/:id - Fail on insufficient stock", async () => {
 });
 
 
+test("POST /api/sweets/stock/:id - Increase stock", async () => {
+  const res = await request(app)
+    .post(`/api/sweets/stock/${sweetId}`)
+    .send({ quantity: 5 });
+
+  expect(res.statusCode).toBe(200);
+  expect(res.body.quantity).toBe(15); // originally 10 + 5
+});
+
 })
