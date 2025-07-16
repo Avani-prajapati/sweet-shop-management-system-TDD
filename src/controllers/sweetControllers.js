@@ -32,5 +32,5 @@ const updateSweetController = async (req, res) => {
 module.exports = {
   addSweetController,
   viewAllSweetsController,
-  updateSweetController
+  updateSweetController,
 };

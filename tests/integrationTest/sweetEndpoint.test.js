@@ -4,6 +4,8 @@ const Sweet = require('../../src/models/Sweet');
 const mongoose = require('mongoose');
 const {connectDB,disconnectDB} = require('../../src/config/mongodb');
 
+let sweetId;
+
 beforeAll(async () => {
   await connectDB();
   console.log("Connected to test database");
@@ -63,5 +65,14 @@ describe('integration tests for sweet endpoints', () => {
     expect(res.statusCode).toBe(200);
     expect(res.body.price).toBe(60);
   });
+
+  test("DELETE /api/sweets/:id - Delete sweet", async () => {
+  const res = await request(app).delete(`/api/sweets/${sweetId}`);
+
+  expect(res.statusCode).toBe(200);
+  expect(res.body).toHaveProperty("_id", sweetId); 
+  expect(res.body).toHaveProperty("name", "Kaju Katli"); 
+});
+
 
 })
