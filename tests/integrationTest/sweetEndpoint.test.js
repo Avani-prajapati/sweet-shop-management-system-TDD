@@ -56,5 +56,6 @@ describe('integration tests for sweet endpoints', () => {
     expect(Array.isArray(res.body)).toBe(true);
     expect(res.body.length).toBeGreaterThan(0);
   });
+  
 
 })
