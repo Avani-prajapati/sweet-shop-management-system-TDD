@@ -20,9 +20,17 @@ const viewAllSweetsController = async (req, res) => {
   }
 };
 
-
+const updateSweetController = async (req, res) => {
+  try { 
+    const updated = await updateSweet(req.params.id, req.body);
+    res.status(200).json(updated); 
+    } catch (err) {
+    res.status(400).json({ error: err.message });
+    }
+};   
 
 module.exports = {
   addSweetController,
   viewAllSweetsController,
+  updateSweetController
 };
