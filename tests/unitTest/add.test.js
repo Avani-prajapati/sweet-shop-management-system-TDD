@@ -46,4 +46,14 @@ describe('Add Controller', () => {
       expect(Sweet.prototype.save).toHaveBeenCalledTimes(1);
     });
 
+    test('should throw error if sweet name is missing or invalid', async () => {
+  const invalidData = {
+    category: 'Fried',
+    price: 20,
+    quantity: 10
+  };
+
+  await expect(addSweet(invalidData)).rejects.toThrow('Sweet name is required');
+});
+
 });
