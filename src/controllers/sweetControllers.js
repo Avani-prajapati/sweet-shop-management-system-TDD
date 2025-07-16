@@ -44,5 +44,5 @@ module.exports = {
   addSweetController,
   viewAllSweetsController,
   updateSweetController,
-  deleteSweetController
+  deleteSweetController,
 };

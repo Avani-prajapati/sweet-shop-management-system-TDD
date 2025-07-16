@@ -47,7 +47,6 @@ describe('integration tests for sweet endpoints', () => {
 
     expect(res.statusCode).toBe(201);
     expect(res.body.name).toBe("Kaju Katli");
-    sweetId = res.body._id;
   });
 
   test("GET /api/sweets - View all sweets", async () => {
@@ -73,6 +72,36 @@ describe('integration tests for sweet endpoints', () => {
   expect(res.body).toHaveProperty("_id", sweetId); 
   expect(res.body).toHaveProperty("name", "Kaju Katli"); 
 });
+
+
+test("GET /api/sweets/search?name=Kaju Katli - Search by name only", async () => {
+  const res = await request(app).get("/api/sweets/search?name=Kaju Katli");
+  expect(res.statusCode).toBe(200);
+  expect(res.body[0]).toHaveProperty("name", "Kaju Katli");
+});
+
+test("GET /api/sweets/search?category=Dry - Search by category only", async () => {
+  const res = await request(app).get("/api/sweets/search?category=Dry");
+  expect(res.statusCode).toBe(200);
+  expect(res.body[0]).toHaveProperty("category", "Dry");
+});
+
+test("GET /api/sweets/search?price=50 - Search by price only", async () => {
+  const res = await request(app).get("/api/sweets/search?price=50");
+  expect(res.statusCode).toBe(200);
+  expect(res.body[0]).toHaveProperty("price", 50);
+});
+
+
+test("GET /api/sweets/search?name=UnknownSweet - No result found", async () => {
+  const res = await request(app).get("/api/sweets/search?name=UnknownSweet");
+
+  console.log(res.body); // optional for debugging
+
+  expect(res.statusCode).toBe(404); // 🟢 this should now work
+  expect(res.body.error).toMatch(/no sweets found/i);
+});
+
 
 
 })
