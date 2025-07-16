@@ -17,6 +17,6 @@ router.put('/:id',updateSweetController);
 router.delete('/:id',deleteSweetController);
 router.get("/search", searchSweetController);
 router.post("/purchase/:id", purchaseSweetController);
-
+router.post("/stock/:id", updateStockController);  
 
 module.exports = router;

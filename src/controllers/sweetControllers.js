@@ -86,6 +86,15 @@ const purchaseSweetController = async (req, res) => {
   }
 };
 
+const updateStockController = async (req, res) => {
+  try {
+    const { quantity } = req.body;
+    const result = await restockSweet(req.params.id, quantity);
+    res.status(200).json(result);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
 
 module.exports = {
   addSweetController,
