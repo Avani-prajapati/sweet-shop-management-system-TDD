@@ -56,4 +56,26 @@ describe('Add Controller', () => {
   await expect(addSweet(invalidData)).rejects.toThrow('Sweet name is required');
 });
 
+ test('should throw error if price is not positive', async () => {
+  const invalidData = {
+    name: 'Barfi',
+    category: 'Dry',
+    price: 0, // Invalid
+    quantity: 10
+  };
+
+  await expect(addSweet(invalidData)).rejects.toThrow('Price must be a positive number');
+});
+
+test('should throw error if quantity is negative', async () => {
+  const invalidData = {
+    name: 'Halwa',
+    category: 'Chilled',
+    price: 25,
+    quantity: -5 // Invalid
+  };
+
+  await expect(addSweet(invalidData)).rejects.toThrow('Quantity must be a non-negative integer');
+});
+
 });
