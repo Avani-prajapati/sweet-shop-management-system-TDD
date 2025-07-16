@@ -3,6 +3,7 @@ const viewAllSweets = require("../services/viewAllSweets");
 const updateSweet = require("../services/updateSweet");
 const deleteSweet = require("../services/deleteSweet");
 const searchSweets = require("../services/searchSweets");
+const purchaseSweet = require("../services/purchaseSweet");
 
 const addSweetController = async (req, res) => {
   try {
@@ -81,5 +82,6 @@ module.exports = {
   viewAllSweetsController,
   updateSweetController,
   deleteSweetController,
-  searchSweetController
+  searchSweetController,
+  purchaseSweetController
 };

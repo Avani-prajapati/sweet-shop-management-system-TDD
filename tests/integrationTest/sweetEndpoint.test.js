@@ -102,6 +102,23 @@ test("GET /api/sweets/search?name=UnknownSweet - No result found", async () => {
   expect(res.body.error).toMatch(/no sweets found/i);
 });
 
+test("POST /api/sweets/purchase/:id - Successful purchase", async () => {
+  const res = await request(app)
+    .post(`/api/sweets/purchase/${sweetId}`)
+    .send({ quantity: 4 });
+
+  expect(res.statusCode).toBe(200);
+  expect(res.body.quantity).toBe(6); // originally 10 - 4
+});
+
+test("POST /api/sweets/purchase/:id - Fail on insufficient stock", async () => {
+  const res = await request(app)
+    .post(`/api/sweets/purchase/${sweetId}`)
+    .send({ quantity: 100 });
+
+  expect(res.statusCode).toBe(400);
+  expect(res.body.error).toMatch(/insufficient stock/i);
+});
 
 
 })

@@ -5,7 +5,8 @@ const {
     viewAllSweetsController,
     updateSweetController,
     deleteSweetController,
-    searchSweetController
+    searchSweetController,
+    purchaseSweetController
 } = require("../controllers/sweetControllers");
 
 
@@ -14,6 +15,7 @@ router.get('/',viewAllSweetsController);
 router.put('/:id',updateSweetController);
 router.delete('/:id',deleteSweetController);
 router.get("/search", searchSweetController);
+
 
 
 module.exports = router;
