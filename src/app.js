@@ -1,6 +1,6 @@
 const express = require('express');
 const dotenv = require('dotenv');
-const sweetRoutes = require('./routers/sweetRoutes');
+const sweetRoutes = require('./routers/sweetRouters');
 
 dotenv.config();
 
