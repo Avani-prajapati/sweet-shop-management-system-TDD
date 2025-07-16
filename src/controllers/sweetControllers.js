@@ -1,6 +1,7 @@
 const addSweet = require("../services/addSweet");
 const viewAllSweets = require("../services/viewAllSweets");
 const updateSweet = require("../services/updateSweet");
+const deleteSweet = require("../services/deleteSweet");
 
 const addSweetController = async (req, res) => {
   try {
@@ -29,8 +30,19 @@ const updateSweetController = async (req, res) => {
     }
 };   
 
+const deleteSweetController = async (req, res) => {
+  try {
+    const result = await deleteSweet(req.params.id);
+    res.status(200).json(result);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
+
 module.exports = {
   addSweetController,
   viewAllSweetsController,
   updateSweetController,
+  deleteSweetController
 };

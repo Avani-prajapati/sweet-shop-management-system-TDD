@@ -6,6 +6,7 @@ const {addSweetController,viewAllSweetsController,updateSweetController,deleteSw
 router.post("/",addSweetController);
 router.get('/',viewAllSweetsController);
 router.put('/:id',updateSweetController);
+router.delete('/:id',deleteSweetController);
 
 
 
