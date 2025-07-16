@@ -6,4 +6,6 @@ const {addSweetController,viewAllSweetsController} = require("../controllers/swe
 router.post("/",addSweetController);
 router.get('/',viewAllSweetsController);
 
+
+
 module.exports = router;

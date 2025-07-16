@@ -1,7 +1,5 @@
 const Sweet = require("../models/Sweet");
 
-const VALID_CATEGORIES = ["Dry", "Fried", "Chilled"];
-
 const updateSweet = async (id, updateData) => {
   if (!id) {
     throw new Error("ID is required to update a sweet.");

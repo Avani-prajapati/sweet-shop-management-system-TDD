@@ -32,9 +32,7 @@ beforeEach(async () => {
 
 
 describe('integration tests for sweet endpoints', () => {
-   let sweetId;
-
-  test("POST /api/sweets - Add a new sweet", async () => {
+   test("POST /api/sweets - Add a new sweet", async () => {
     const res = await request(app)
       .post("/api/sweets")
       .send({
@@ -56,6 +54,14 @@ describe('integration tests for sweet endpoints', () => {
     expect(Array.isArray(res.body)).toBe(true);
     expect(res.body.length).toBeGreaterThan(0);
   });
-  
+
+   test("PUT /api/sweets/:id - Update sweet", async () => {
+    const res = await request(app)
+      .put(`/api/sweets/${sweetId}`)
+      .send({ price: 60 });
+
+    expect(res.statusCode).toBe(200);
+    expect(res.body.price).toBe(60);
+  });
 
 })
