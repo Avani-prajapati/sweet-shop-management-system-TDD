@@ -14,6 +14,22 @@ afterAll(async () => {
   console.log("Disconnected from test database");
 });
 
+beforeEach(async () => {
+  // Clear collection to avoid data leaks between tests
+  await Sweet.deleteMany({});
+
+  // Add one sweet before each test
+  const res = await request(app).post("/api/sweets").send({
+    id: 101,
+    name: "Kaju Katli",
+    category: "Dry",
+    price: 50,
+    quantity: 10,
+  });
+  sweetId = res.body._id;
+});
+
+
 
 describe('integration tests for sweet endpoints', () => {
    let sweetId;
