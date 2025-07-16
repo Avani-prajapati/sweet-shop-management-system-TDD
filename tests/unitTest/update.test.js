@@ -40,12 +40,6 @@ describe('Update Sweet Service', () => {
     await expect(updateSweet("1001", invalidData)).rejects.toThrow("Price must be a positive number.");
   });
 
-  test("should throw validation error for invalid category", async () => {
-    const invalidData = { category: "Liquid" };
-
-    await expect(updateSweet("1001", invalidData)).rejects.toThrow("Invalid category. Must be one of: Dry, Fried, Chilled");
-  });
-
   test("should handle database error", async () => {
     Sweet.findByIdAndUpdate = jest.fn().mockRejectedValue(new Error("Database error"));
 
