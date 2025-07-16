@@ -31,4 +31,19 @@ describe('Add Controller', () => {
       expect(Sweet.prototype.save).toHaveBeenCalledTimes(1);
     });
 
+    test('should handle errors when adding sweet', async () => {
+      const sweetData = {
+        id: 1002,
+        name: 'Gulab Jamun',
+        category: 'Fried',
+        price: 30,
+        quantity: 15
+      };
+
+      Sweet.prototype.save = jest.fn().mockRejectedValue(new Error('Database error'));
+
+      await expect(addSweet(sweetData)).rejects.toThrow('Database error');
+      expect(Sweet.prototype.save).toHaveBeenCalledTimes(1);
+    });
+
 });
