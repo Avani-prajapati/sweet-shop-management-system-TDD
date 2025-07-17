@@ -40,6 +40,8 @@ npm run test
 
 This will execute all **unit** and **integration** tests.
 
+[Test report](./TESTREPORT.md)
+
 ---
 
 ### Developer Mode
