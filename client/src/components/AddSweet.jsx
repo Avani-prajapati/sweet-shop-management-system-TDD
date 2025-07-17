@@ -54,7 +54,7 @@ export default function AddSweet() {
         quantity: parseInt(formData.quantity)
       };
 
-      const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/sweets`, dataToSend);
+      const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL || "http://localhost:5000"}/api/sweets`, dataToSend);
       
       toast.success('Sweet added successfully! 🍬', {
         position: "top-center",

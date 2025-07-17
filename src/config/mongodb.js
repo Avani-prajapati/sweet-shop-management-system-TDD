@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 
 dotenv.config();
-const dbLink = process.env.MONGO_TEST_URL || process.env.MONGO_URL;
+const dbLink = process.env.MONGO_TEST_URL || process.env.MONGO_URL || 'mongodb://localhost:27017/sweet-shop-test';
 
 const connectDB = async () => {
   try {

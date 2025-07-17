@@ -23,7 +23,7 @@ export default function PurchaseSweet({
 
     try {
       const updatedQuantity = currentSweet.quantity - quantity;
-      await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/sweets/${currentSweet._id}`, {
+      await axios.put(`${import.meta.env.VITE_API_BASE_URL || "http://localhost:5000"}/api/sweets/${currentSweet._id}`, {
         quantity: updatedQuantity
       });
       
@@ -62,7 +62,7 @@ export default function PurchaseSweet({
             
             <div className="pt-2">
               <p className="text-lg font-semibold text-gray-800">
-                Total: ${(currentSweet.price * quantity).toFixed(2)}
+                Total: ₹ {(currentSweet.price * quantity).toFixed(2)}
               </p>
             </div>
           </div>

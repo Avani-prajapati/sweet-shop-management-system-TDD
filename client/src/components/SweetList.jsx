@@ -65,7 +65,7 @@ const SweetList = () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        `${import.meta.env.VITE_API_BASE_URL}/api/sweets`
+        `${import.meta.env.VITE_API_BASE_URL || "http://localhost:5000"}/api/sweets`
       );
       setSweets(response.data || []);
 
@@ -99,7 +99,7 @@ const SweetList = () => {
   const handleDelete = async () => {
     try {
       await axios.delete(
-        `${import.meta.env.VITE_API_BASE_URL}/api/sweets/${sweetToDelete}`
+        `${import.meta.env.VITE_API_BASE_URL || "http://localhost:5000"}/api/sweets/${sweetToDelete}`
       );
       setSweets(sweets.filter((sweet) => sweet._id !== sweetToDelete));
       toast.success("Sweet deleted successfully");

@@ -19,7 +19,7 @@ export default function RestockSweet({
     try {
       // Call the new API endpoint
       await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}/api/sweets/stock/${currentSweet._id}`,
+        `${import.meta.env.VITE_API_BASE_URL || "http://localhost:5000"}/api/sweets/stock/${currentSweet._id}`,
         { quantity }
       );
       
