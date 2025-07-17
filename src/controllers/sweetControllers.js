@@ -18,6 +18,7 @@ const addSweetController = async (req, res) => {
 const viewAllSweetsController = async (req, res) => {
   try {
     const sweets = await viewAllSweets();
+    console.log("Fetched sweets:", sweets);
     res.status(200).json(sweets);
   } catch (err) {
     res.status(400).json({ error: err.message });
