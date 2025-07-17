@@ -18,6 +18,7 @@ function App() {
       {/* Sweet Routes */}
       <Route path="/" element={<SweetList />} />
       <Route path="/sweets/add" element={<AddSweet />} />
+      <Route path="/sweets/edit/:id" element={<EditSweet/>} />
       {/* 404 */}
       <Route path="*" element={<NotFound />} />
     </Routes>

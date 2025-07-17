@@ -491,6 +491,7 @@ const SweetList = () => {
                   <div className="flex space-x-2">
                     <Link
                       to={`/sweets/edit/${sweet._id}`}
+                      state={{ sweet }} // Pass the sweet data via state
                       className="inline-flex items-center justify-center flex-1 rounded-lg border border-gray-200 bg-white px-2 py-1.5 text-xs font-medium text-gray-700 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-200 transition-all"
                     >
                       <Edit className="h-3 w-3 mr-1" />
