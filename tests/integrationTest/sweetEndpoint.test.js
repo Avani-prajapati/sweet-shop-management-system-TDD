@@ -49,12 +49,36 @@ describe('integration tests for sweet endpoints', () => {
     expect(res.body.name).toBe("Kaju Katli");
   });
 
+  test("POST /api/sweets - Fail on missing required fields", async () => {
+  const res = await request(app)
+    .post("/api/sweets")
+    .send({ name: "Bad Sweet" }); // Missing category, price, quantity
+
+  expect(res.statusCode).toBe(400);
+  expect(res.body.error).toMatch("Price must be a positive number.");
+});
+
   test("GET /api/sweets - View all sweets", async () => {
     const res = await request(app).get("/api/sweets");
     expect(res.statusCode).toBe(200);
     expect(Array.isArray(res.body)).toBe(true);
     expect(res.body.length).toBeGreaterThan(0);
   });
+
+
+test("GET /api/sweets - Simulate DB failure", async () => {
+  const spy = jest.spyOn(Sweet, 'find').mockImplementationOnce(() => {
+    throw new Error("Simulated DB failure");
+  });
+
+  const res = await request(app).get("/api/sweets");
+
+  expect(res.statusCode).toBe(400);
+  expect(res.body.error).toMatch(/simulated db failure/i);
+
+  spy.mockRestore(); // cleanup
+});
+
 
    test("PUT /api/sweets/:id - Update sweet", async () => {
     const res = await request(app)
@@ -65,6 +89,18 @@ describe('integration tests for sweet endpoints', () => {
     expect(res.body.price).toBe(60);
   });
 
+  test("PUT /api/sweets/:id - Fail to update non-existing sweet", async () => {
+  const fakeId = new mongoose.Types.ObjectId(); // Valid ObjectId format, but not in DB
+
+  const res = await request(app)
+    .put(`/api/sweets/${fakeId}`)
+    .send({ price: 99 });
+
+  expect(res.statusCode).toBe(400);
+  expect(res.body.error).toMatch(/not found|no sweet/i);
+});
+
+
   test("DELETE /api/sweets/:id - Delete sweet", async () => {
   const res = await request(app).delete(`/api/sweets/${sweetId}`);
 
@@ -73,12 +109,29 @@ describe('integration tests for sweet endpoints', () => {
   expect(res.body).toHaveProperty("name", "Kaju Katli"); 
 });
 
+test("DELETE /api/sweets/:id - Fail to delete non-existing sweet", async () => {
+  const fakeId = new mongoose.Types.ObjectId(); // ID not in DB
+
+  const res = await request(app).delete(`/api/sweets/${fakeId}`);
+
+  expect(res.statusCode).toBe(400);
+  expect(res.body.error).toMatch(/not found|no sweet/i);
+});
+
 
 test("GET /api/sweets/search?name=Kaju Katli - Search by name only", async () => {
   const res = await request(app).get("/api/sweets/search?name=Kaju Katli");
   expect(res.statusCode).toBe(200);
   expect(res.body[0]).toHaveProperty("name", "Kaju Katli");
 });
+
+test("GET /api/sweets/search?price=abc - Fail on invalid price input", async () => {
+  const res = await request(app).get("/api/sweets/search?price=abc");
+
+  expect(res.statusCode).toBe(400);
+  expect(res.body.error).toMatch(/price must be a valid number/i);
+});
+
 
 test("GET /api/sweets/search?category=Dry - Search by category only", async () => {
   const res = await request(app).get("/api/sweets/search?category=Dry");
@@ -101,6 +154,23 @@ test("GET /api/sweets/search?name=UnknownSweet - No result found", async () => {
   expect(res.statusCode).toBe(404); // 🟢 this should now work
   expect(res.body.error).toMatch(/no sweets found/i);
 });
+
+test("GET /api/sweets/search - Simulate internal error (service failure)", async () => {
+  const originalFind = Sweet.find;
+
+  // Simulate DB failure by making Sweet.find() throw an error
+  jest.spyOn(Sweet, 'find').mockImplementationOnce(() => {
+    throw new Error("Simulated search failure");
+  });
+
+  const res = await request(app).get("/api/sweets/search?name=Kaju");
+
+  expect(res.statusCode).toBe(400);
+  expect(res.body.error).toMatch(/simulated search failure/i);
+
+  Sweet.find = originalFind; // Restore original
+});
+
 
 test("POST /api/sweets/purchase/:id - Successful purchase", async () => {
   const res = await request(app)
@@ -129,5 +199,15 @@ test("POST /api/sweets/stock/:id - Increase stock", async () => {
   expect(res.statusCode).toBe(200);
   expect(res.body.quantity).toBe(15); // originally 10 + 5
 });
+
+test("POST /api/sweets/stock/:id - Fail on negative quantity", async () => {
+  const res = await request(app)
+    .post(`/api/sweets/stock/${sweetId}`)
+    .send({ quantity: -3 });
+
+  expect(res.statusCode).toBe(400);
+  expect(res.body.error).toMatch(/Restock quantity must be a positive integer/i);
+});
+
 
 })

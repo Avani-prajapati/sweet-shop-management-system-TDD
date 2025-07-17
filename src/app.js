@@ -16,11 +16,8 @@ app.use(express.json());
 app.use('/api/sweets', sweetRoutes);
 
 // Global error handler (optional)
-app.use((err, req, res, next) => {
-  res.status(500).json({ message: err.message });
-});
-
-if (process.env.NODE_ENV !== 'test') {
+const NODE_ENV = 'test';
+if (NODE_ENV !== 'test') {
   connectDB().then(() => {
     const PORT = process.env.PORT || 5000;
     app.listen(PORT, () => {

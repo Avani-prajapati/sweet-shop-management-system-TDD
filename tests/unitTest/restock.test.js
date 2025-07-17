@@ -40,4 +40,9 @@ describe("Restock Sweet Controller", () => {
 
     await expect(restockSweet("1001", 5)).rejects.toThrow("Database error");
   });
+
+  test("should throw error if ID is not provided", async () => {
+  await expect(restockSweet(null, { name: "Barfi" }))
+    .rejects.toThrow("weet ID is required");
+  });
 });

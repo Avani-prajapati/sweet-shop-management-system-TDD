@@ -45,4 +45,20 @@ describe('Update Sweet Service', () => {
 
     await expect(updateSweet("1001", { name: "Rasgulla" })).rejects.toThrow("Database error");
   });
+
+  test("should throw error if ID is not provided", async () => {
+  await expect(updateSweet(null, { name: "Barfi" }))
+    .rejects.toThrow("ID is required to update a sweet.");
+});
+
+test("should throw error for invalid (empty) name", async () => {
+  await expect(updateSweet("1001", { name: "  " }))
+    .rejects.toThrow("Sweet name must be a non-empty string.");
+});
+
+test("should throw error for invalid quantity (negative)", async () => {
+  await expect(updateSweet("1001", { quantity: -5 }))
+    .rejects.toThrow("Quantity must be a non-negative integer.");
+});
+
 })

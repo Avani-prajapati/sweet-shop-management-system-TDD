@@ -50,10 +50,6 @@ const searchSweetController = async (req, res) => {
     // Count how many filters are passed
     const activeFilters = [name, category, price].filter((val) => val !== undefined && val !== "");
 
-    if (activeFilters.length !== 1) {
-      return res.status(400).json({ error: "Please provide only one filter at a time: name, category, or price." });
-    }
-
     const filters = {};
     if (name) filters.name = name;
     if (category) filters.category = category;

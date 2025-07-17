@@ -2,9 +2,12 @@ const Sweet = require("../models/Sweet");
 
 const purchaseSweet = async (id, quantity) => {
   try {
+
     if (!id) {
-      throw new Error("Sweet ID is required");
+     const message = "Sweet ID is required";
+     throw new Error(message);
     }
+
 
     if (!Number.isInteger(quantity) || quantity <= 0) {
       throw new Error("Purchase quantity must be a positive integer");

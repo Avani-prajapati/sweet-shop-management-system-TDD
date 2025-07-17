@@ -57,4 +57,9 @@ describe("Purchase Sweet Controller", () => {
 
     await expect(purchaseSweet("1001", 2)).rejects.toThrow("Database error");
   });
+
+    test("should throw error if ID is not provided", async () => {
+    await expect(purchaseSweet(null, { name: "Barfi" }))
+      .rejects.toThrow("weet ID is required");
+  });
 });
