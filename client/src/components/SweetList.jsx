@@ -464,7 +464,7 @@ const SweetList = () => {
                       Price:
                     </span>
                     <span className="font-bold text-gray-800">
-                      ${sweet.price.toFixed(2)}
+                      ₹ {sweet.price.toFixed(2)}
                     </span>
                   </div>
 
