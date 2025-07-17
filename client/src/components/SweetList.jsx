@@ -493,6 +493,17 @@ const SweetList = () => {
       )}
 
  
+ {/* Restock Dialog */}
+{restockDialogOpen && currentSweet && (
+  <RestockSweet
+    currentSweet={currentSweet}
+    setRestockDialogOpen={setRestockDialogOpen}
+    fetchSweets={fetchSweets}
+    quantity={quantity}
+    setQuantity={setQuantity}
+  />
+)}
+
 
       {/* Footer */}
       <footer className="mt-12 py-8 border-t border-fuchsia-100 text-center">
